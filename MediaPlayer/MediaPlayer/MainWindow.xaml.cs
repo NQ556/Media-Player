@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +22,28 @@ namespace MediaPlayer
     /// </summary>
     public partial class MainWindow : Window
     {
+        ObservableCollection<Song> _songs = new ObservableCollection<Song>();
+        
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            _songs = new ObservableCollection<Song>();
+        }
+
+        private void addMusicButton_Click(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = true;
+            openFileDialog.Filter = "MP3 (.mp3)|*.mp3|ALL Files (*.*)|*.*";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+
+            }
         }
     }
 }

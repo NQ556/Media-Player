@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MediaPlayer"
         mc:Ignorable="d"
-        Title="Media Player" Height="720" Width="1280" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="Media Player" Height="720" Width="1280" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="Window_Loaded">
     <StackPanel Background="#F9F9F9">
         <StackPanel Height="580" Orientation="Horizontal">
             <StackPanel Width="180" Background="#D3CEDF">
@@ -14,44 +14,129 @@
                     <Label Content="Music" FontSize="40" FontWeight="DemiBold"/>
                 </StackPanel>
 
-                <Button Margin="0,80,0,0" Height="50" Background="Transparent" BorderThickness="0">
+                <Button x:Name="myMusicButton" Margin="0,80,0,0" Height="50" Background="Transparent" BorderThickness="0">
                     <StackPanel Orientation="Horizontal">
                         <Image Height="30" Width="30" Source="Images/music.png"/>
                         <Label Content="My music" FontSize="25" FontWeight="Light"/>
                     </StackPanel>
                 </Button>
 
-                <Button Margin="0,20,0,0" Height="50" Background="Transparent" BorderThickness="0">
+                <Button x:Name="likedNameButton" Margin="0,20,0,0" Height="50" Background="Transparent" BorderThickness="0">
                     <StackPanel Orientation="Horizontal">
                         <Image Height="30" Width="30" Source="Images/heart.png"/>
                         <Label Content="Liked songs" FontSize="25" FontWeight="Light"/>
                     </StackPanel>
                 </Button>
 
-                <Button Margin="0,20,0,0" Height="50" Background="Transparent" BorderThickness="0">
+                <Button x:Name="recentButton" Margin="0,20,0,0" Height="50" Background="Transparent" BorderThickness="0">
                     <StackPanel Orientation="Horizontal">
                         <Image Height="30" Width="30" Source="Images/recent.png"/>
                         <Label Content="Recent" FontSize="25" FontWeight="Light"/>
                     </StackPanel>
                 </Button>
 
-                <Button Margin="0,20,0,0" Height="50" Background="Transparent" BorderThickness="0">
+                <Button x:Name="myPlaylistsButton" Margin="0,20,0,0" Height="50" Background="Transparent" BorderThickness="0">
                     <StackPanel Orientation="Horizontal">
                         <Image Height="30" Width="30" Source="Images/playlist.png"/>
                         <Label Content="My playlists" FontSize="25" FontWeight="Light"/>
                     </StackPanel>
                 </Button>
- 
+
             </StackPanel>
 
             <StackPanel Width="700">
-                <TextBox Width="395" Height="40" Margin="0,30,0,0" VerticalContentAlignment="Center"
+                <Canvas x:Name="myMusicPanel" Height="580">
+                    <StackPanel Height="580" Width="700">
+                        <TextBox Width="395" Height="40" Margin="0,30,0,0" VerticalContentAlignment="Center"
                          FontSize="20"/>
+
+                        <DockPanel Height="40" Margin="0,10,0,0">
+                            <StackPanel Width="300" HorizontalAlignment="Right" Orientation="Horizontal">
+                                <Button x:Name="addFolderButton" Width="150" Background="Transparent" BorderThickness="0">
+                                    <StackPanel Width="150" Height="40" Orientation="Horizontal">
+                                        <Image Height="25" Width="25" Source="Images/add.png" Margin="10,0,0,0"/>
+                                        <Label Content="Add folder" FontSize="20" FontWeight="Light"/>
+                                    </StackPanel>
+                                </Button>
+
+                                <Button x:Name="addMusicButton" Width="150" Background="Transparent" BorderThickness="0"
+                                        Click="addMusicButton_Click">
+                                    <StackPanel Width="150" Height="40" Orientation="Horizontal">
+                                        <Image Height="25" Width="25" Source="Images/add.png" Margin="10,0,0,0"/>
+                                        <Label Content="Add music" FontSize="20" FontWeight="Light"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </DockPanel>
+
+                        <Grid Height="460">
+                            <Grid.Resources>
+                                <Style x:Key="alternatingWithTriggers" TargetType="ListViewItem">
+                                    <Style.Triggers>
+                                        <Trigger Property="ListBox.AlternationIndex" Value="1">
+                                            <Setter Property="Background" Value="#EBE8F0"/>
+                                        </Trigger>
+                                        <Trigger Property="ListBox.AlternationIndex" Value="2">
+                                            <Setter Property="Background" Value="#F9F9F9"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Resources>
+
+                            <ListView Height="460" Background="Transparent" BorderThickness="0" 
+                                      AlternationCount="3" x:Name="songsListview"
+                                      ItemContainerStyle="{StaticResource alternatingWithTriggers}">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridView.ColumnHeaderContainerStyle>
+                                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </Style>
+                                        </GridView.ColumnHeaderContainerStyle>
+
+                                        <GridViewColumn Header="" Width="180">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding name}" FontWeight="Light"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+
+                                        <GridViewColumn Header="" Width="180">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding artist}" FontWeight="ExtraLight"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+
+                                        <GridViewColumn Header="" Width="180">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding album}" FontWeight="ExtraLight"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+
+                                        <GridViewColumn Header="" Width="180">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding time}" FontWeight="ExtraLight"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </Grid>
+                    </StackPanel>
+                </Canvas>
             </StackPanel>
 
             <Image Width="400" Source="Images/background.png"/>
         </StackPanel>
-        
+
         <StackPanel Height="130" Background="White" Orientation="Horizontal">
             <StackPanel.Effect>
                 <DropShadowEffect ShadowDepth="10"/>
@@ -68,7 +153,7 @@
             </StackPanel>
 
             <StackPanel Width="920">
-                <StackPanel Height="60" Orientation="Horizontal" Margin="130,0,0,0">
+                <StackPanel Height="60" Orientation="Horizontal" Margin="130,5,0,0">
                     <Button Width="60" Background="Transparent" BorderThickness="0">
                         <Image Height="50" Width="50" Source="Images/shuffle.png"/>
                     </Button>

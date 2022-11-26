@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\add.png" />
     <None Remove="Images\background.png" />
     <None Remove="Images\heart.png" />
     <None Remove="Images\music.png" />
@@ -17,12 +18,14 @@
     <None Remove="Images\previous.png" />
     <None Remove="Images\recent.png" />
     <None Remove="Images\repeat.png" />
-    <None Remove="Images\search.png" />
     <None Remove="Images\shuffle.png" />
     <None Remove="Images\volume.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\add.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\background.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -48,9 +51,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\repeat.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\search.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\shuffle.png">
