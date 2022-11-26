@@ -84,7 +84,7 @@
                             </Grid.Resources>
 
                             <ListView Height="460" Background="Transparent" BorderThickness="0" 
-                                      AlternationCount="3" x:Name="songsListview"
+                                      AlternationCount="2" x:Name="songsListview"
                                       ItemContainerStyle="{StaticResource alternatingWithTriggers}">
                                 <ListView.View>
                                     <GridView>
@@ -98,7 +98,7 @@
                                         <GridViewColumn Header="" Width="180">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding name}" FontWeight="Light"/>
+                                                    <TextBlock Text="{Binding name}" FontWeight="Light" FontSize="20"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -106,7 +106,7 @@
                                         <GridViewColumn Header="" Width="180">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding artist}" FontWeight="ExtraLight"/>
+                                                    <TextBlock Text="{Binding artist}" FontWeight="ExtraLight" FontSize="20"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -114,7 +114,7 @@
                                         <GridViewColumn Header="" Width="180">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding album}" FontWeight="ExtraLight"/>
+                                                    <TextBlock Text="{Binding album}" FontWeight="ExtraLight" FontSize="20"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -122,7 +122,7 @@
                                         <GridViewColumn Header="" Width="180">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding time}" FontWeight="ExtraLight"/>
+                                                    <TextBlock Text="{Binding length}" FontWeight="ExtraLight" FontSize="20"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>

@@ -9,10 +9,11 @@ namespace MediaPlayer
 {
     public class Song : INotifyPropertyChanged
     {
-        string name { get; set; }
-        string artist { get; set; }
-        string album { get; set; }
-        string time { get; set; }
+        public string name { get; set; }
+        public string artist { get; set; }
+        public string album { get; set; }
+        public string length { get; set; }
+        public string path { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }
