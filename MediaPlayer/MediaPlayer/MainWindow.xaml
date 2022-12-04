@@ -14,34 +14,83 @@
                     <Label Content="Music" FontSize="40" FontWeight="DemiBold"/>
                 </StackPanel>
 
-                <Button x:Name="myMusicButton" Margin="0,80,0,0" Height="50" Background="Transparent" BorderThickness="0">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Height="30" Width="30" Source="Images/music.png"/>
-                        <Label Content="My music" FontSize="25" FontWeight="Light"/>
-                    </StackPanel>
-                </Button>
+                <RadioButton x:Name="myMusicButton" Margin="0,80,0,0" Height="50" Background="Transparent" BorderThickness="0"
+                              Click="myMusicButton_Click">
+                    <RadioButton.Template>
+                        <ControlTemplate TargetType="{x:Type RadioButton}">
+                            <StackPanel x:Name="musicBorder">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Image Height="30" Width="30" Source="Images/music.png"/>
+                                    <Label Content="My music" FontSize="25" FontWeight="Light"/>
+                                </StackPanel>
+                            </StackPanel>
 
-                <Button x:Name="likedNameButton" Margin="0,20,0,0" Height="50" Background="Transparent" BorderThickness="0">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Height="30" Width="30" Source="Images/heart.png"/>
-                        <Label Content="Liked songs" FontSize="25" FontWeight="Light"/>
-                    </StackPanel>
-                </Button>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter Property="Background" Value="White" TargetName="musicBorder"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </RadioButton.Template>
+                </RadioButton>
 
-                <Button x:Name="recentButton" Margin="0,20,0,0" Height="50" Background="Transparent" BorderThickness="0">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Height="30" Width="30" Source="Images/recent.png"/>
-                        <Label Content="Recent" FontSize="25" FontWeight="Light"/>
-                    </StackPanel>
-                </Button>
+                <RadioButton x:Name="likedNameButton" Margin="0,20,0,0" Height="50" Background="Transparent" BorderThickness="0"
+                             Click="likedNameButton_Click">
+                    <RadioButton.Template>
+                        <ControlTemplate TargetType="{x:Type RadioButton}">
+                            <StackPanel x:Name="likedSongsBorder">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Image Height="30" Width="30" Source="Images/heart.png"/>
+                                    <Label Content="Liked songs" FontSize="25" FontWeight="Light"/>
+                                </StackPanel>
+                            </StackPanel>
 
-                <Button x:Name="myPlaylistsButton" Margin="0,20,0,0" Height="50" Background="Transparent" BorderThickness="0">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Height="30" Width="30" Source="Images/playlist.png"/>
-                        <Label Content="My playlists" FontSize="25" FontWeight="Light"/>
-                    </StackPanel>
-                </Button>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter Property="Background" Value="White" TargetName="likedSongsBorder"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </RadioButton.Template>
+                </RadioButton>
 
+                <RadioButton x:Name="recentButton" Margin="0,20,0,0" Height="50" Background="Transparent" BorderThickness="0">
+                    <RadioButton.Template>
+                        <ControlTemplate TargetType="{x:Type RadioButton}">
+                            <StackPanel x:Name="recentBorder">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Image Height="30" Width="30" Source="Images/recent.png"/>
+                                    <Label Content="Recent" FontSize="25" FontWeight="Light"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter Property="Background" Value="White" TargetName="recentBorder"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </RadioButton.Template>
+                </RadioButton>
+
+                <RadioButton x:Name="myPlaylistsButton" Margin="0,20,0,0" Height="50" Background="Transparent" BorderThickness="0">
+                    <RadioButton.Template>
+                        <ControlTemplate TargetType="{x:Type RadioButton}">
+                            <StackPanel x:Name="myPlaylistsBorder">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Image Height="30" Width="30" Source="Images/playlist.png"/>
+                                    <Label Content="My playlists" FontSize="25" FontWeight="Light"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter Property="Background" Value="White" TargetName="myPlaylistsBorder"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </RadioButton.Template>
+                </RadioButton>
             </StackPanel>
 
             <StackPanel Width="700">
@@ -53,18 +102,26 @@
                         <DockPanel Height="40" Margin="0,10,0,0">
                             <StackPanel Width="300" HorizontalAlignment="Right" Orientation="Horizontal">
                                 <Button x:Name="addFolderButton" Width="150" Background="Transparent" BorderThickness="0">
-                                    <StackPanel Width="150" Height="40" Orientation="Horizontal">
-                                        <Image Height="25" Width="25" Source="Images/add.png" Margin="10,0,0,0"/>
-                                        <Label Content="Add folder" FontSize="20" FontWeight="Light"/>
-                                    </StackPanel>
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <StackPanel Width="150" Height="40" Orientation="Horizontal">
+                                                <Image Height="25" Width="25" Source="Images/add.png" Margin="10,0,0,0"/>
+                                                <Label Content="Add folder" FontSize="20" FontWeight="Light"/>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Button.Template>
                                 </Button>
 
                                 <Button x:Name="addMusicButton" Width="150" Background="Transparent" BorderThickness="0"
                                         Click="addMusicButton_Click">
-                                    <StackPanel Width="150" Height="40" Orientation="Horizontal">
-                                        <Image Height="25" Width="25" Source="Images/add.png" Margin="10,0,0,0"/>
-                                        <Label Content="Add music" FontSize="20" FontWeight="Light"/>
-                                    </StackPanel>
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <StackPanel Width="150" Height="40" Orientation="Horizontal">
+                                                <Image Height="25" Width="25" Source="Images/add.png" Margin="10,0,0,0"/>
+                                                <Label Content="Add music" FontSize="20" FontWeight="Light"/>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Button.Template>
                                 </Button>
                             </StackPanel>
                         </DockPanel>
@@ -72,12 +129,40 @@
                         <Grid Height="460">
                             <Grid.Resources>
                                 <Style x:Key="alternatingWithTriggers" TargetType="ListViewItem">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                                <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" 
+                                                        BorderThickness="{TemplateBinding BorderThickness}" 
+                                                        Background="{TemplateBinding Background}" 
+                                                        Padding="{TemplateBinding Padding}"
+                                                        SnapsToDevicePixels="true">
+                                                    <GridViewRowPresenter 
+                                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+
+                                    <EventSetter Event="MouseDoubleClick" Handler="ListViewItem_MouseDoubleClick"/>
+
                                     <Style.Triggers>
                                         <Trigger Property="ListBox.AlternationIndex" Value="1">
                                             <Setter Property="Background" Value="#EBE8F0"/>
                                         </Trigger>
+
                                         <Trigger Property="ListBox.AlternationIndex" Value="2">
                                             <Setter Property="Background" Value="#F9F9F9"/>
+                                        </Trigger>
+
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#D3CEDF"/>
+                                        </Trigger>
+
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="#D3CEDF"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -86,6 +171,16 @@
                             <ListView Height="460" Background="Transparent" BorderThickness="0" 
                                       AlternationCount="2" x:Name="songsListview"
                                       ItemContainerStyle="{StaticResource alternatingWithTriggers}">
+                                <ListView.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem x:Name="deleteMenuItem" Header="Delete" Click="deleteMenuItem_Click">
+                                            <MenuItem.Icon>
+                                                <Image Source="/Images/bin.png"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                    </ContextMenu>
+                                </ListView.ContextMenu>
+                                
                                 <ListView.View>
                                     <GridView>
                                         <GridView.ColumnHeaderContainerStyle>
@@ -152,29 +247,130 @@
                        Margin="0,5,0,0"/>
             </StackPanel>
 
-            <StackPanel Width="920">
-                <StackPanel Height="60" Orientation="Horizontal" Margin="130,5,0,0">
-                    <Button Width="60" Background="Transparent" BorderThickness="0">
-                        <Image Height="50" Width="50" Source="Images/shuffle.png"/>
-                    </Button>
+            <Grid Width="920">
+                <Grid.Resources>
+                    <Style x:Key="SliderRepeatButton" TargetType="RepeatButton">
+                        <Setter Property="SnapsToDevicePixels" Value="true" />
+                        <Setter Property="OverridesDefaultStyle" Value="true" />
+                        <Setter Property="IsTabStop" Value="false" />
+                        <Setter Property="Focusable" Value="false" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="RepeatButton">
+                                    <Border  BorderThickness="1" BorderBrush="#EFEFEF" Background="#EFEFEF" Height="3"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
 
-                    <Button Width="60" Background="Transparent" BorderThickness="0">
-                        <Image Height="50" Width="50" Source="Images/previous.png"/>
-                    </Button>
+                    <Style x:Key="SliderRepeatButton1" TargetType="RepeatButton">
+                        <Setter Property="SnapsToDevicePixels" Value="true" />
+                        <Setter Property="OverridesDefaultStyle" Value="true" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="RepeatButton">
+                                    <Border SnapsToDevicePixels="True" Background="#D3CEDF"  BorderThickness="1" BorderBrush="#D3CEDF" Height="3"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
 
-                    <Button Width="60" Background="Transparent" BorderThickness="0">
-                        <Image Height="50" Width="50" Source="Images/play.png"/>
-                    </Button>
+                    <Style x:Key="SliderThumb" TargetType="Thumb">
+                        <Setter Property="SnapsToDevicePixels" Value="true" />
+                        <Setter Property="OverridesDefaultStyle" Value="true" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Thumb">
+                                    <Ellipse Height="10" Width="10" Fill="#D3CEDF"></Ellipse>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
 
-                    <Button Width="60" Background="Transparent" BorderThickness="0">
-                        <Image Height="50" Width="50" Source="Images/next.png"/>
-                    </Button>
+                    <ControlTemplate x:Key="Slider"  TargetType="Slider">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Track Grid.Row="1" x:Name="PART_Track"   >
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Style="{StaticResource SliderRepeatButton1}"  Command="Slider.DecreaseLarge" />
+                                </Track.DecreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb Style="{StaticResource SliderThumb}"  />
+                                </Track.Thumb>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Style="{StaticResource SliderRepeatButton}" Command="Slider.IncreaseLarge" />
+                                </Track.IncreaseRepeatButton>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
 
-                    <Button Width="60" Background="Transparent" BorderThickness="0">
-                        <Image Height="50" Width="50" Source="Images/repeat.png"/>
-                    </Button>
+                    <Style x:Key="Horizontal_Slider" TargetType="Slider">
+                        <Setter Property="Focusable" Value="False"/>
+                        <Setter Property="SnapsToDevicePixels" Value="true" />
+                        <Setter Property="OverridesDefaultStyle" Value="true" />
+                        <Style.Triggers>
+                            <Trigger Property="Orientation" Value="Horizontal">
+                                <Setter Property="MinHeight" Value="21" />
+                                <Setter Property="MinWidth" Value="104" />
+                                <Setter Property="Template" Value="{StaticResource Slider}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Resources>
+                
+                <StackPanel Width="920">
+                    <StackPanel Height="60" Orientation="Horizontal" Margin="200,5,0,0">
+                        <Button Width="60" Background="Transparent" BorderThickness="0">
+                            <Button.Template>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Image Height="50" Width="50" Source="Images/shuffle.png"/>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+                        <Button Width="60" Background="Transparent" BorderThickness="0">
+                            <Button.Template>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Image Height="50" Width="50" Source="Images/previous.png"/>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+                        <Button x:Name="playPauseButton" Width="60" Background="Transparent" BorderThickness="0"
+                                Click="playPauseButton_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Image x:Name="playPauseImg" Height="50" Width="50" Source="Images/play.png"/>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+                        <Button Width="60" Background="Transparent" BorderThickness="0">
+                            <Button.Template>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Image Height="50" Width="50" Source="Images/next.png"/>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+                        <Button Width="60" Background="Transparent" BorderThickness="0">
+                            <Button.Template>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Image Height="50" Width="50" Source="Images/repeat.png"/>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </StackPanel>
+
+                    <Slider x:Name="musicSlider" Width="680" HorizontalAlignment="Left" Margin="0,10,0,0"
+                            Style="{StaticResource Horizontal_Slider}" MouseLeftButtonUp="musicSlider_MouseLeftButtonUp"/>
                 </StackPanel>
-            </StackPanel>
+            </Grid>
+            
         </StackPanel>
     </StackPanel>
 </Window>

@@ -10,9 +10,12 @@
   <ItemGroup>
     <None Remove="Images\add.png" />
     <None Remove="Images\background.png" />
+    <None Remove="Images\bin.png" />
+    <None Remove="Images\circle.png" />
     <None Remove="Images\heart.png" />
     <None Remove="Images\music.png" />
     <None Remove="Images\next.png" />
+    <None Remove="Images\pause.png" />
     <None Remove="Images\play.png" />
     <None Remove="Images\playlist.png" />
     <None Remove="Images\previous.png" />
@@ -20,6 +23,13 @@
     <None Remove="Images\repeat.png" />
     <None Remove="Images\shuffle.png" />
     <None Remove="Images\volume.png" />
+    <None Remove="Monikers.imagemanifest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <content Include="Monikers.imagemanifest">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </content>
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +43,12 @@
     <Resource Include="Images\background.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\bin.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\circle.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\heart.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -40,6 +56,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\next.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\pause.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\play.png">

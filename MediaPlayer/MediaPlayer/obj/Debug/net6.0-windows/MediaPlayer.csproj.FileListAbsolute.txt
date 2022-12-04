@@ -21,3 +21,4 @@ E:\Hoc Tap\LTW\Project 2\Media-Player\MediaPlayer\MediaPlayer\obj\Debug\net6.0-w
 E:\Hoc Tap\LTW\Project 2\Media-Player\MediaPlayer\MediaPlayer\obj\Debug\net6.0-windows\MediaPlayer.pdb
 E:\Hoc Tap\LTW\Project 2\Media-Player\MediaPlayer\MediaPlayer\obj\Debug\net6.0-windows\MediaPlayer.genruntimeconfig.cache
 E:\Hoc Tap\LTW\Project 2\Media-Player\MediaPlayer\MediaPlayer\obj\Debug\net6.0-windows\ref\MediaPlayer.dll
+E:\Hoc Tap\LTW\Project 2\Media-Player\MediaPlayer\MediaPlayer\obj\Debug\net6.0-windows\MediaPlayer_Content.g.cs
