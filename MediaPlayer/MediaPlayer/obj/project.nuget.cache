@@ -1,9 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "uMdk5cJUTw2CHS9/6vX+T6W7j5o8EaNgMKku6+idEGYH1fpjS03Mur3ltgc7gYzAqRx4GWn/FNApAnEx1+1yuQ==",
+  "dgSpecHash": "VHEW+5WWDCxAzZra1lgIiZYHP1wxyyuRcaBtNYBcKt8H1Mxxy6VpW82p8THW+rqrzyACFBlRpxwVimvuMfReLQ==",
   "success": true,
   "projectFilePath": "E:\\Hoc Tap\\LTW\\Project 2\\Media-Player\\MediaPlayer\\MediaPlayer\\MediaPlayer.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\ADMIN\\.nuget\\packages\\sqlite-net-pcl\\1.8.116\\sqlite-net-pcl.1.8.116.nupkg.sha512",
+    "C:\\Users\\ADMIN\\.nuget\\packages\\sqlitepclraw.bundle_green\\2.0.4\\sqlitepclraw.bundle_green.2.0.4.nupkg.sha512",
+    "C:\\Users\\ADMIN\\.nuget\\packages\\sqlitepclraw.core\\2.0.4\\sqlitepclraw.core.2.0.4.nupkg.sha512",
+    "C:\\Users\\ADMIN\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.0.4\\sqlitepclraw.lib.e_sqlite3.2.0.4.nupkg.sha512",
+    "C:\\Users\\ADMIN\\.nuget\\packages\\sqlitepclraw.provider.dynamic_cdecl\\2.0.4\\sqlitepclraw.provider.dynamic_cdecl.2.0.4.nupkg.sha512",
+    "C:\\Users\\ADMIN\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\taglibsharp\\2.3.0\\taglibsharp.2.3.0.nupkg.sha512"
   ],
   "logs": []

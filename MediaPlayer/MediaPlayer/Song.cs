@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace MediaPlayer
 {
     public class Song : INotifyPropertyChanged
     {
+        [PrimaryKey, AutoIncrement]
+        public int id { get; set; }
         public string name { get; set; }
         public string artist { get; set; }
         public string album { get; set; }

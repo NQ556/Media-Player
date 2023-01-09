@@ -48,6 +48,10 @@
             "TagLibSharp": {
               "target": "Package",
               "version": "[2.3.0, )"
+            },
+            "sqlite-net-pcl": {
+              "target": "Package",
+              "version": "[1.8.116, )"
             }
           },
           "imports": [

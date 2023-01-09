@@ -13,5 +13,8 @@ namespace MediaPlayer
     /// </summary>
     public partial class App : Application
     {
+        static string databaseName = "Songs.db";
+        static string curDir = System.Environment.CurrentDirectory;
+        public static string databasePath = System.IO.Path.Combine(curDir, databaseName);
     }
 }
