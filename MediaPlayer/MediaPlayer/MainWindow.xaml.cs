@@ -29,6 +29,9 @@ namespace MediaPlayer
         SQLiteConnection connection = new SQLiteConnection(App.databasePath);
 
         ObservableCollection<Song> _songs = new ObservableCollection<Song>();
+        ObservableCollection<FavoriteSong> _favoriteSongs = new ObservableCollection<FavoriteSong>();
+        ObservableCollection<RecentSong> _recentSongs = new ObservableCollection<RecentSong>();
+
         private System.Windows.Media.MediaPlayer mediaPlayer;
 
         TimeSpan _position;
@@ -44,21 +47,31 @@ namespace MediaPlayer
         {
             InitializeComponent();
             myMusicButton.IsChecked = true;
-            myMusicPanel.Visibility = Visibility.Visible;
+            songsListview.Visibility = Visibility.Visible;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            initializeListView();
             createTable();
-
-            _songs = new ObservableCollection<Song>();
-            songsListview.ItemsSource = _songs;
             loadSongs();
 
             mediaPlayer = new System.Windows.Media.MediaPlayer();
             createTimer();
 
             mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
+        }
+
+        private void initializeListView()
+        {
+            _songs = new ObservableCollection<Song>();
+            songsListview.ItemsSource = _songs;
+
+            _favoriteSongs = new ObservableCollection<FavoriteSong>();
+            favoriteListview.ItemsSource = _favoriteSongs;
+
+            _recentSongs = new ObservableCollection<RecentSong>();
+            recentListview.ItemsSource = _recentSongs;
         }
 
         private void createTimer()
@@ -71,6 +84,8 @@ namespace MediaPlayer
         private void createTable()
         {
             connection.CreateTable<Song>();
+            connection.CreateTable<FavoriteSong>();
+            connection.CreateTable<RecentSong>();
         }
 
         private void loadSongs()
@@ -80,6 +95,20 @@ namespace MediaPlayer
             foreach (Song song in query)
             {
                 _songs.Add(song);
+            }
+
+            var queryFavorite = connection.Table<FavoriteSong>();
+
+            foreach (FavoriteSong favoriteSong in queryFavorite)
+            {
+                _favoriteSongs.Add(favoriteSong);
+            }
+
+            var queryRecent = connection.Table<RecentSong>();
+
+            foreach (RecentSong recentSong in queryRecent)
+            {
+                _recentSongs.Add(recentSong);
             }
         }
 
@@ -169,8 +198,26 @@ namespace MediaPlayer
 
         private void ListViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            curSongPos = songsListview.SelectedIndex;
-            string curPath = _songs[curSongPos].path;
+            string curPath = "";
+
+            if (songsListview.Visibility == Visibility.Visible)
+            {
+                curSongPos = songsListview.SelectedIndex;
+                curPath = _songs[curSongPos].path;
+            }
+
+            else if (favoriteListview.Visibility == Visibility.Visible)
+            {
+                curSongPos = favoriteListview.SelectedIndex;
+                curPath = _favoriteSongs[curSongPos].path;
+            }
+
+            else if (recentListview.Visibility == Visibility.Visible)
+            {
+                curSongPos = recentListview.SelectedIndex;
+                curPath = _recentSongs[curSongPos].path;
+            }
+            
             var uri = new System.Uri(curPath);
 
             if (e.ChangedButton == MouseButton.Left)
@@ -197,9 +244,114 @@ namespace MediaPlayer
             _position = TimeSpan.Parse(_songs[curSongPos].length);
             musicSlider.Minimum = 0;
             musicSlider.Maximum = _position.TotalSeconds;
+
+            addToRecentSongs();
+        }
+
+        private void addToRecentSongs()
+        {
+            List<RecentSong> tmpList = new List<RecentSong>();
+
+            if (songsListview.Visibility == Visibility.Visible)
+            {
+                int i = songsListview.SelectedIndex;
+
+                RecentSong recentSong = new RecentSong()
+                {
+                    name = _songs[i].name,
+                    artist = _songs[i].artist,
+                    album = _songs[i].album,
+                    length = _songs[i].length,
+                    path = _songs[i].path
+                };
+
+                if (_recentSongs.Count == 14)
+                {
+                    tmpList.Clear();
+
+                    for (int j = 1; j < _recentSongs.Count; j++)
+                    {
+                        tmpList.Add(_recentSongs[j]);
+                    }
+                    tmpList.Add(recentSong);
+                    _recentSongs.Clear();
+
+                    foreach (RecentSong s in tmpList)
+                    {
+                        _recentSongs.Add(s);
+                    }
+
+                    connection.Delete(_recentSongs[0]);
+                    connection.Insert(recentSong);
+                }
+
+                else
+                {
+                    _recentSongs.Add(recentSong);
+                    connection.Insert(recentSong);
+                }
+            }
+
+            else if (favoriteListview.Visibility == Visibility.Visible)
+            {
+                int i = favoriteListview.SelectedIndex;
+
+                RecentSong recentSong = new RecentSong()
+                {
+                    name = _favoriteSongs[i].name,
+                    artist = _favoriteSongs[i].artist,
+                    album = _favoriteSongs[i].album,
+                    length = _favoriteSongs[i].length,
+                    path = _favoriteSongs[i].path
+                };
+
+                if (_recentSongs.Count == 14)
+                {
+                    tmpList.Clear();
+
+                    for (int j = 1; j < _recentSongs.Count; j++)
+                    {
+                        tmpList.Add(_recentSongs[j]);
+                    }
+                    tmpList.Add(recentSong);
+                    _recentSongs.Clear();
+
+                    foreach (RecentSong s in tmpList)
+                    {
+                        _recentSongs.Add(s);
+                    }
+
+                    connection.Delete(_recentSongs[0]);
+                    connection.Insert(recentSong);
+                }
+
+                else
+                {
+                    _recentSongs.Add(recentSong);
+                    connection.Insert(recentSong);
+                }
+            }    
         }
 
         private void changeToNextSong()
+        {
+            if (songsListview.Visibility == Visibility.Visible)
+            {
+                changeToNextSongMyMusic();
+            }
+
+            else if (favoriteListview.Visibility == Visibility.Visible)
+            {
+                changeToNextSongMyFavorite();
+            }
+
+            else if (recentListview.Visibility == Visibility.Visible)
+            {
+                changeToNextSongRecent();
+            }
+        }
+
+        private void changeToNextSongMyMusic()
         {
             if (isShuffle)
             {
@@ -237,7 +389,101 @@ namespace MediaPlayer
             }
         }
 
+        private void changeToNextSongMyFavorite()
+        {
+            if (isShuffle)
+            {
+                Random random = new Random();
+
+                int nextSongPos = 0;
+
+                do
+                {
+                    nextSongPos = random.Next(0, _favoriteSongs.Count);
+                } while (nextSongPos == curSongPos || nextSongPos == (_favoriteSongs.Count - 1));
+
+                curSongPos = nextSongPos;
+                favoriteListview.SelectedIndex = curSongPos;
+                string curPath = _favoriteSongs[curSongPos].path;
+                var uri = new System.Uri(curPath);
+
+                startPlaying(uri);
+            }
+
+            else
+            {
+                curSongPos += 1;
+
+                if (curSongPos >= _favoriteSongs.Count)
+                {
+                    curSongPos = 0;
+                }
+
+                favoriteListview.SelectedIndex = curSongPos;
+                string curPath = _favoriteSongs[curSongPos].path;
+                var uri = new System.Uri(curPath);
+
+                startPlaying(uri);
+            }
+        }
+
+        private void changeToNextSongRecent()
+        {
+            if (isShuffle)
+            {
+                Random random = new Random();
+
+                int nextSongPos = 0;
+
+                do
+                {
+                    nextSongPos = random.Next(0, _recentSongs.Count);
+                } while (nextSongPos == curSongPos || nextSongPos == (_recentSongs.Count - 1));
+
+                curSongPos = nextSongPos;
+                recentListview.SelectedIndex = curSongPos;
+                string curPath = _recentSongs[curSongPos].path;
+                var uri = new System.Uri(curPath);
+
+                startPlaying(uri);
+            }
+
+            else
+            {
+                curSongPos += 1;
+
+                if (curSongPos >= _recentSongs.Count)
+                {
+                    curSongPos = 0;
+                }
+
+                recentListview.SelectedIndex = curSongPos;
+                string curPath = _recentSongs[curSongPos].path;
+                var uri = new System.Uri(curPath);
+
+                startPlaying(uri);
+            }
+        }
+
         private void changeToPreviousSong()
+        {
+            if (songsListview.Visibility == Visibility.Visible)
+            {
+                changeToPreviousSongMyMusic();
+            }
+
+            else if (favoriteListview.Visibility == Visibility.Visible)
+            {
+                changeToPreviousSongMyFavorite();
+            }
+
+            else if (recentListview.Visibility == Visibility.Visible)
+            {
+                changeToPreviousSongRecent();
+            }
+        }
+
+        private void changeToPreviousSongMyMusic()
         {
             curSongPos -= 1;
 
@@ -253,26 +499,80 @@ namespace MediaPlayer
             startPlaying(uri);
         }
 
+        private void changeToPreviousSongMyFavorite()
+        {
+            curSongPos -= 1;
+
+            if (curSongPos < 0)
+            {
+                curSongPos = _favoriteSongs.Count - 1;
+            }
+
+            favoriteListview.SelectedIndex = curSongPos;
+            string curPath = _favoriteSongs[curSongPos].path;
+            var uri = new System.Uri(curPath);
+
+            startPlaying(uri);
+        }
+
+        private void changeToPreviousSongRecent()
+        {
+            curSongPos -= 1;
+
+            if (curSongPos < 0)
+            {
+                curSongPos = _recentSongs.Count - 1;
+            }
+
+            recentListview.SelectedIndex = curSongPos;
+            string curPath = _recentSongs[curSongPos].path;
+            var uri = new System.Uri(curPath);
+
+            startPlaying(uri);
+        }
+
         private void repeatSong()
         {
-            string curPath = _songs[curSongPos].path;
+            string curPath = "";
+
+            if (songsListview.Visibility == Visibility.Visible)
+            {
+                curPath = _songs[curSongPos].path;
+            }    
+
+            else if (favoriteListview.Visibility == Visibility.Visible)
+            {
+                curPath = _favoriteSongs[curSongPos].path;
+            }
+
+            else if (recentListview.Visibility == Visibility.Visible)
+            {
+                curPath = _recentSongs[curSongPos].path;
+            }
+
             var uri = new System.Uri(curPath);
             startPlaying(uri);
         }
 
         private void myMusicButton_Click(object sender, RoutedEventArgs e)
         {
-            myMusicPanel.Visibility = Visibility.Visible;
+            songsListview.Visibility = Visibility.Visible;
+            favoriteListview.Visibility = Visibility.Hidden;
+            recentListview.Visibility = Visibility.Hidden;
         }
 
-        private void likedNameButton_Click(object sender, RoutedEventArgs e)
+        private void myFavoriteButton_Click(object sender, RoutedEventArgs e)
         {
-            myMusicPanel.Visibility = Visibility.Hidden;
+            songsListview.Visibility = Visibility.Hidden;
+            favoriteListview.Visibility = Visibility.Visible;
+            recentListview.Visibility = Visibility.Hidden;
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void recentButton_Click(object sender, RoutedEventArgs e)
         {
-
+            songsListview.Visibility = Visibility.Hidden;
+            favoriteListview.Visibility = Visibility.Hidden;
+            recentListview.Visibility = Visibility.Visible;
         }
 
         private void deleteMenuItem_Click(object sender, RoutedEventArgs e)
@@ -355,6 +655,53 @@ namespace MediaPlayer
                 isRepeated = true;
                 repeatImg.Source = new BitmapImage(new Uri("Images/repeat_1.png", UriKind.Relative));
             }
+        }
+
+        private bool isExistedInMyFavorite(FavoriteSong favoriteSong)
+        {
+            foreach (FavoriteSong item in _favoriteSongs)
+            {
+                if (item.name == favoriteSong.name)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void addToFavorite_Click(object sender, RoutedEventArgs e)
+        {
+            int i = songsListview.SelectedIndex;
+
+            FavoriteSong favoriteSong = new FavoriteSong()
+            {
+                name = _songs[i].name,
+                artist = _songs[i].artist,
+                album = _songs[i].album,
+                length = _songs[i].length,
+                path = _songs[i].path
+            };
+
+            if (!isExistedInMyFavorite(favoriteSong))
+            {
+                _favoriteSongs.Add(favoriteSong);
+                connection.Insert(favoriteSong);
+            }
+        }
+
+        private void deleteFavoriteItem_Click(object sender, RoutedEventArgs e)
+        {
+            int i = favoriteListview.SelectedIndex;
+            connection.Delete(_favoriteSongs[i]);
+            _favoriteSongs.RemoveAt(i);
+        }
+
+        private void deleteRecentItem_Click(object sender, RoutedEventArgs e)
+        {
+            int i = recentListview.SelectedIndex;
+            connection.Delete(_recentSongs[i]);
+            _recentSongs.RemoveAt(i);
         }
     }
 }
